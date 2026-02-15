@@ -18,6 +18,7 @@ const demoFill = document.getElementById("demoFill");
 const generateInsightsBtn = document.getElementById("generateInsights");
 
 const timetableGrid = document.getElementById("timetableGrid");
+const timelineTicks = document.getElementById("timelineTicks");
 const activityButtons = Array.from(document.querySelectorAll(".activity-btn"));
 const activeActivityLabel = document.getElementById("activeActivityLabel");
 const clearSelectionBtn = document.getElementById("clearSelection");
@@ -36,7 +37,7 @@ const totalUnaccounted = document.getElementById("totalUnaccounted");
 let chartInstance = null;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const slotsPerHour = 2;
+const slotsPerHour = 1;
 const totalSlots = 24 * slotsPerHour;
 const schedule = Array.from({ length: totalSlots }, () => "");
 const slotElements = [];
@@ -57,8 +58,7 @@ let selectionEnd = null;
 
 const indexToTime = (index) => {
   const hour = Math.floor(index / slotsPerHour);
-  const minute = index % slotsPerHour === 0 ? "00" : "30";
-  return `${String(hour).padStart(2, "0")}:${minute}`;
+  return `${String(hour).padStart(2, "0")}:00`;
 };
 
 const computeTotals = () => {
@@ -73,7 +73,7 @@ const computeTotals = () => {
 
   schedule.forEach((activity) => {
     if (activity && totals[activity] !== undefined) {
-      totals[activity] += 0.5;
+      totals[activity] += 1;
     }
   });
 
@@ -195,18 +195,31 @@ const applyActivityToRange = (start, end, activity) => {
 
 const renderGrid = () => {
   timetableGrid.innerHTML = "";
+  timelineTicks.innerHTML = "";
+  slotElements.length = 0;
+
+  for (let hour = 0; hour < 24; hour += 1) {
+    const tick = document.createElement("div");
+    tick.className = "timeline-tick";
+    tick.textContent = `${String(hour).padStart(2, "0")}:00`;
+    tick.dataset.hour = String(hour);
+    tick.addEventListener("click", () => {
+      const endIndex = Number(tick.dataset.hour);
+      if (endIndex < 0) {
+        return;
+      }
+      applyActivityToRange(0, endIndex, activeActivity);
+      updateTotalsUI();
+    });
+    timelineTicks.appendChild(tick);
+  }
+
   for (let i = 0; i < totalSlots; i += 1) {
-    const row = document.createElement("div");
-    row.className = "time-row";
-
-    const label = document.createElement("span");
-    label.className = "time-label";
-    label.textContent = indexToTime(i);
-
     const slot = document.createElement("button");
     slot.type = "button";
     slot.className = "time-slot";
     slot.dataset.index = String(i);
+    slot.setAttribute("aria-label", `${indexToTime(i)} - ${indexToTime(i + 1)}`);
 
     slot.addEventListener("pointerdown", (event) => {
       event.preventDefault();
@@ -233,9 +246,7 @@ const renderGrid = () => {
       updateTotalsUI();
     });
 
-    row.appendChild(label);
-    row.appendChild(slot);
-    timetableGrid.appendChild(row);
+    timetableGrid.appendChild(slot);
     slotElements.push(slot);
   }
 };

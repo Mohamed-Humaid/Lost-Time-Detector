@@ -244,25 +244,45 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.timetable-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-height: 560px;
-  overflow: auto;
-  padding-right: 8px;
-}
 
-.time-row {
+.timeline {
   display: grid;
-  grid-template-columns: 70px 1fr;
   gap: 12px;
-  align-items: center;
 }
 
-.time-label {
-  font-size: 0.8rem;
+.timeline-scroll {
+  display: grid;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.timeline-track {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(12px, 1fr));
+  gap: 4px;
+  align-items: center;
+  padding: 10px;
+  background: #f7f8ff;
+  border-radius: 16px;
+  border: 1px solid rgba(28, 35, 51, 0.08);
+  min-width: 720px;
+}
+
+.timeline-ticks {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0 10px;
+  font-size: 0.75rem;
   color: var(--muted);
+  min-width: 720px;
+}
+
+.timeline-tick {
+  text-align: center;
+  cursor: pointer;
+  padding: 2px 0;
 }
 
 .time-slot {
