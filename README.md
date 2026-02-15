@@ -9,7 +9,8 @@ It uses a simple productivity scoring formula combined with an AI API to generat
 
 ## ✅ Features
 
-- Daily productivity logging (study, social, entertainment, sleep, tasks, goal).
+- 24-hour timetable with drag-to-assign activity blocks.
+- Live time allocation totals + unaccounted hours calculation.
 - Weighted productivity score with Low/Medium/High status.
 - AI-powered insights: time leak analysis, behavioral insight, suggestions.
 - Dashboard view with score, status, and chart visualization.

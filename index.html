@@ -60,38 +60,84 @@
           <p>Capture the inputs that drive your score and insights.</p>
         </div>
         <form class="log-form" id="logForm">
-          <div class="grid">
-            <label class="field">
-              <span>Study hours</span>
-              <input type="number" min="0" step="0.5" name="study" required />
-            </label>
-            <label class="field">
-              <span>Social media hours</span>
-              <input type="number" min="0" step="0.5" name="social" required />
-            </label>
-            <label class="field">
-              <span>Entertainment hours</span>
-              <input type="number" min="0" step="0.5" name="entertainment" required />
-            </label>
-            <label class="field">
-              <span>Sleep hours</span>
-              <input type="number" min="0" step="0.5" name="sleep" required />
-            </label>
-            <label class="field">
-              <span>Tasks completed</span>
-              <input type="number" min="0" step="1" name="tasks" required />
-            </label>
-            <label class="field">
-              <span>Main goal for the day</span>
-              <input type="text" name="goal" placeholder="e.g., Finish chapter 3" required />
-            </label>
+          <div class="timetable">
+            <div class="timetable-controls">
+              <div class="activity-picker">
+                <button class="activity-btn is-active" type="button" data-activity="study">
+                  Study
+                </button>
+                <button class="activity-btn" type="button" data-activity="social">
+                  Social
+                </button>
+                <button class="activity-btn" type="button" data-activity="entertainment">
+                  Entertainment
+                </button>
+                <button class="activity-btn" type="button" data-activity="sleep">
+                  Sleep
+                </button>
+                <button class="activity-btn" type="button" data-activity="tasks">
+                  Tasks
+                </button>
+                <button class="activity-btn" type="button" data-activity="other">
+                  Other
+                </button>
+              </div>
+              <div class="picker-meta">
+                <span class="label">Selected activity</span>
+                <strong id="activeActivityLabel">Study</strong>
+              </div>
+              <div class="control-actions">
+                <button class="btn ghost" type="button" id="clearSelection">
+                  Clear selection
+                </button>
+                <button class="btn ghost" type="button" id="resetSchedule">
+                  Reset day
+                </button>
+              </div>
+              <div class="quick-inputs">
+                <label class="field">
+                  <span>Tasks completed</span>
+                  <input type="number" min="0" step="1" id="tasksInput" required />
+                </label>
+                <label class="field">
+                  <span>Main goal for the day</span>
+                  <input
+                    type="text"
+                    id="goalInput"
+                    placeholder="e.g., Finish chapter 3"
+                    required
+                  />
+                </label>
+              </div>
+            </div>
+
+            <p class="helper">
+              Drag across the timeline to assign the selected activity. Click a
+              slot to fill a single 30-minute block.
+            </p>
+            <div class="timetable-grid" id="timetableGrid"></div>
           </div>
 
-          <div class="ai-settings">
-            <p class="helper">
-              AI insights are generated via a local OpenAI proxy. Your API key
-              stays on the server, not in the browser.
-            </p>
+          <div class="timetable-summary">
+            <div class="summary-card">
+              <h3>Time allocation</h3>
+              <ul class="summary-list">
+                <li><span>Study</span><strong id="totalStudy">0.0h</strong></li>
+                <li><span>Social</span><strong id="totalSocial">0.0h</strong></li>
+                <li><span>Entertainment</span><strong id="totalEntertainment">0.0h</strong></li>
+                <li><span>Sleep</span><strong id="totalSleep">0.0h</strong></li>
+                <li><span>Tasks</span><strong id="totalTasks">0.0h</strong></li>
+                <li><span>Other</span><strong id="totalOther">0.0h</strong></li>
+                <li><span>Unaccounted</span><strong id="totalUnaccounted">24.0h</strong></li>
+              </ul>
+            </div>
+
+            <div class="ai-settings">
+              <p class="helper">
+                AI insights are generated via a local OpenAI proxy. Your API key
+                stays on the server, not in the browser.
+              </p>
+            </div>
           </div>
 
           <div class="form-actions">
@@ -121,6 +167,22 @@
               <span>0</span>
               <span>50</span>
               <span>100</span>
+            </div>
+          </div>
+
+          <div class="score-card unaccounted-card">
+            <div class="score-header">
+              <span>Unaccounted hours</span>
+              <span class="pill" id="unaccountedStatus">Not rated</span>
+            </div>
+            <div class="score-value" id="unaccountedValue">--</div>
+            <p class="score-note" id="unaccountedNote">
+              Add your hours to see what is missing.
+            </p>
+            <div class="score-scale">
+              <span>0</span>
+              <span>12</span>
+              <span>24</span>
             </div>
           </div>
 
