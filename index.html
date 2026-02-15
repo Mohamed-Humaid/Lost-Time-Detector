@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lost Time Detector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-orbit"></div>
+    <div class="bg-grid"></div>
+
+    <main class="page">
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">AI-Powered Productivity Analyzer</p>
+          <h1>Lost Time Detector</h1>
+          <p class="lead">
+            Log your day, reveal hidden time leaks, and get clear, actionable
+            suggestions for a sharper routine.
+          </p>
+          <div class="hero-actions">
+            <button class="btn primary" id="scrollToForm">Start logging</button>
+            <button class="btn ghost" id="demoFill">Load demo data</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Today at a glance</h2>
+          <div class="mini-stats">
+            <div>
+              <span class="label">Focus score</span>
+              <strong id="heroScore">--</strong>
+            </div>
+            <div>
+              <span class="label">Status</span>
+              <strong id="heroStatus">Not rated</strong>
+            </div>
+            <div>
+              <span class="label">Trend</span>
+              <strong id="heroTrend">Awaiting data</strong>
+            </div>
+          </div>
+          <div class="chip-row">
+            <span class="chip">Behavioral insight</span>
+            <span class="chip">Time leak scan</span>
+            <span class="chip">Personal plan</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="section" id="formSection">
+        <div class="section-title">
+          <h2>Daily productivity log</h2>
+          <p>Capture the inputs that drive your score and insights.</p>
+        </div>
+        <form class="log-form" id="logForm">
+          <div class="grid">
+            <label class="field">
+              <span>Study hours</span>
+              <input type="number" min="0" step="0.5" name="study" required />
+            </label>
+            <label class="field">
+              <span>Social media hours</span>
+              <input type="number" min="0" step="0.5" name="social" required />
+            </label>
+            <label class="field">
+              <span>Entertainment hours</span>
+              <input type="number" min="0" step="0.5" name="entertainment" required />
+            </label>
+            <label class="field">
+              <span>Sleep hours</span>
+              <input type="number" min="0" step="0.5" name="sleep" required />
+            </label>
+            <label class="field">
+              <span>Tasks completed</span>
+              <input type="number" min="0" step="1" name="tasks" required />
+            </label>
+            <label class="field">
+              <span>Main goal for the day</span>
+              <input type="text" name="goal" placeholder="e.g., Finish chapter 3" required />
+            </label>
+          </div>
+
+          <div class="ai-settings">
+            <p class="helper">
+              AI insights are generated via a local OpenAI proxy. Your API key
+              stays on the server, not in the browser.
+            </p>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn primary" type="submit">Calculate score</button>
+            <button class="btn" type="button" id="generateInsights">Generate insights</button>
+            <button class="btn ghost" type="reset">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="section results" id="resultsSection">
+        <div class="section-title">
+          <h2>Dashboard</h2>
+          <p>Score, status, and personalized guidance.</p>
+        </div>
+        <div class="results-grid">
+          <div class="score-card">
+            <div class="score-header">
+              <span>Productivity score</span>
+              <span class="pill" id="scoreStatus">Not rated</span>
+            </div>
+            <div class="score-value" id="scoreValue">--</div>
+            <p class="score-note" id="scoreNote">
+              Log your day to see a score.
+            </p>
+            <div class="score-scale">
+              <span>0</span>
+              <span>50</span>
+              <span>100</span>
+            </div>
+          </div>
+
+          <div class="insights-card">
+            <h3>AI insights</h3>
+            <div class="insight-block">
+              <h4>Time leak analysis</h4>
+              <p id="leakInsight">No analysis yet.</p>
+            </div>
+            <div class="insight-block">
+              <h4>Behavioral insight</h4>
+              <p id="behaviorInsight">Awaiting your data.</p>
+            </div>
+            <div class="insight-block">
+              <h4>Personalized suggestions</h4>
+              <ul id="suggestionsList">
+                <li>Complete a log to unlock suggestions.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3>Daily balance</h3>
+            <canvas id="balanceChart" height="200"></canvas>
+            <p class="helper" id="chartNote">
+              This chart updates when you calculate a score.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
