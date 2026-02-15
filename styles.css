@@ -226,6 +226,11 @@ textarea {
   color: #1c2333;
 }
 
+.activity-btn[data-activity="erase"].is-active {
+  background: rgba(30, 41, 59, 0.9);
+  color: #ffffff;
+}
+
 .picker-meta {
   display: flex;
   flex-direction: column;

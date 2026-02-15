@@ -56,6 +56,8 @@ let isSelecting = false;
 let selectionStart = null;
 let selectionEnd = null;
 
+const normalizeActivity = (activity) => (activity === "erase" ? "" : activity);
+
 const indexToTime = (index) => {
   const hour = Math.floor(index / slotsPerHour);
   return `${String(hour).padStart(2, "0")}:00`;
@@ -187,9 +189,10 @@ const highlightRange = (start, end) => {
 };
 
 const applyActivityToRange = (start, end, activity) => {
+  const normalizedActivity = normalizeActivity(activity);
   const [minIndex, maxIndex] = start < end ? [start, end] : [end, start];
   for (let i = minIndex; i <= maxIndex; i += 1) {
-    setSlotActivity(i, activity);
+    setSlotActivity(i, normalizedActivity);
   }
 };
 

@@ -81,6 +81,9 @@
                 <button class="activity-btn" type="button" data-activity="other">
                   Other
                 </button>
+                <button class="activity-btn" type="button" data-activity="erase">
+                  Erase
+                </button>
               </div>
               <div class="picker-meta">
                 <span class="label">Selected activity</span>
@@ -111,11 +114,6 @@
               </div>
             </div>
 
-            <p class="helper">
-              Drag across the timeline to assign the selected activity. Click a
-              slot to fill a single 1-hour block. Click a time tick to fill
-              from 00:00 up to that hour.
-            </p>
             <div class="timeline">
               <div class="timeline-scroll">
                 <div class="timeline-track" id="timetableGrid"></div>
@@ -138,12 +136,6 @@
               </ul>
             </div>
 
-            <div class="ai-settings">
-              <p class="helper">
-                AI insights are generated via a local OpenAI proxy. Your API key
-                stays on the server, not in the browser.
-              </p>
-            </div>
           </div>
 
           <div class="form-actions">
